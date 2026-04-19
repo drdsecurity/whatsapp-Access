@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 set -u
 
 GREEN='\033[1;32m'
@@ -13,6 +12,12 @@ RESET='\033[0m'
 
 BAR_WIDTH=60
 FINAL_PERCENT=95
+
+# 24 hours total:
+# percent 0..95  => 96 steps
+# each step has 5 frames => 480 frames
+# 86400 / 480 = 180 seconds per frame
+FRAME_SLEEP=180
 
 type_line() {
   local text="$1"
@@ -102,9 +107,11 @@ draw_progress_frame() {
   local empty=$((BAR_WIDTH - filled))
   local bar=""
   local i
+
   for ((i=0; i<filled; i++)); do
     bar="${bar}#"
   done
+
   for ((i=0; i<empty; i++)); do
     bar="${bar}-"
   done
@@ -122,46 +129,46 @@ print_log_block() {
   printf "\n"
   case "$p" in
     1)
-      printf "${CYAN}[LOG 00:00:12] Runtime shell prepared.${RESET}\n"
+      printf "${CYAN}[LOG 00:18:00] Runtime shell prepared.${RESET}\n"
       ;;
     4)
-      printf "${CYAN}[LOG 00:01:18] Authenticating User Endpoint.${RESET}\n"
+      printf "${CYAN}[LOG 01:12:00] Authenticating local environment.${RESET}\n"
       ;;
     8)
-      printf "${CYAN}[LOG 00:02:36] Synchronizing Message Streams.${RESET}\n"
+      printf "${CYAN}[LOG 02:24:00] Synchronizing internal data streams.${RESET}\n"
       ;;
     13)
-      printf "${CYAN}[LOG 00:04:05] Linking Remote Communication Node.${RESET}\n"
+      printf "${CYAN}[LOG 03:54:00] Linking remote communication node.${RESET}\n"
       ;;
     19)
-      printf "${CYAN}[LOG 00:05:41] Remote Session Link Established successfully.${RESET}\n"
+      printf "${CYAN}[LOG 05:42:00] Session link stability check passed.${RESET}\n"
       ;;
     26)
-      printf "${CYAN}[LOG 00:07:58] Identity Layer Verification.${RESET}\n"
+      printf "${CYAN}[LOG 07:48:00] Identity layer verification completed.${RESET}\n"
       ;;
     33)
-      printf "${CYAN}[LOG 00:10:22] Injecting Runtime Protocol Handlers.${RESET}\n"
+      printf "${CYAN}[LOG 09:54:00] Injecting runtime protocol handlers.${RESET}\n"
       ;;
     41)
-      printf "${CYAN}[LOG 00:12:59] Synchronizing Global Relay Nodes.${RESET}\n"
+      printf "${CYAN}[LOG 12:18:00] Synchronizing global relay nodes.${RESET}\n"
       ;;
     49)
-printf "${CYAN}[LOG 00:15:44] System library synchronization stable.${RESET}\n"
+      printf "${CYAN}[LOG 14:42:00] System library synchronization stable.${RESET}\n"
       ;;
     58)
-      printf "${CYAN}[LOG 00:18:33] Storage metadata indexing reached safe threshold.${RESET}\n"
+      printf "${CYAN}[LOG 17:24:00] Storage metadata indexing reached safe threshold.${RESET}\n"
       ;;
     67)
-      printf "${CYAN}[LOG 00:21:18] Residual artifact scan continuing.${RESET}\n"
+      printf "${CYAN}[LOG 20:06:00] Residual artifact scan continuing.${RESET}\n"
       ;;
     76)
-      printf "${CYAN}[LOG 00:24:06] Resolving Recursive Dependency Chains.${RESET}\n"
+      printf "${CYAN}[LOG 22:48:00] Resolving recursive dependency chains.${RESET}\n"
       ;;
     85)
-      printf "${CYAN}[LOG 00:26:57] Initiating Last-Stage Verification.${RESET}\n"
+      printf "${CYAN}[LOG 25:30:00] Initiating last-stage verification.${RESET}\n"
       ;;
     92)
-      printf "${CYAN}[LOG 00:28:42] Engaging Terminal Safeguard Protcols completion.${RESET}\n"
+      printf "${CYAN}[LOG 27:36:00] Engaging terminal safeguard protocols completion.${RESET}\n"
       ;;
   esac
 }
@@ -172,20 +179,16 @@ print_metrics() {
     "$(cpu_value "$p")" "$(mem_value "$p")" "$(io_value "$p")" "$(phase_name "$p")"
 }
 
-# ~30 minutes total:
-# 96 steps (0..95), average about 18.75 seconds each.
-# Each step is broken into 5 mini-frames, around 3.75 seconds each.
 run_long_progress() {
   local percent
   local tick=0
   local frame
-  local frame_sleep=3.75
 
   for ((percent=0; percent<=FINAL_PERCENT; percent++)); do
     for ((frame=0; frame<5; frame++)); do
       draw_progress_frame "$percent" "$tick"
       tick=$((tick + 1))
-      sleep "$frame_sleep"
+      sleep "$FRAME_SLEEP"
     done
 
     case "$percent" in
@@ -205,31 +208,31 @@ run_long_progress() {
 clear
 section "SYSTEM CORE v3.9.12 - MAINTENANCE TERMINAL"
 
-type_line "${GREEN}[+] Initializing Secure Communication Layer...${RESET}" 0.006
-type_line "${GREEN}[+] Authenticating User Endpoint...${RESET}" 0.006
+type_line "${GREEN}[+] Initializing secure communication layer...${RESET}" 0.006
+type_line "${GREEN}[+] Authenticating local environment...${RESET}" 0.006
 type_line "${GREEN}[+] Verifying system integrity...                      [OK]${RESET}" 0.006
-type_line "${GREEN}[+] Establishing secure environment +919990374379 Whatsapp Access ...                 [OK]${RESET}" 0.006
-type_line "${GREEN}[+] Synchronizing Message Streams...         [OK]${RESET}" 0.006
-type_line "${GREEN}[+] Linking Remote Communication Node...                     [OK]${RESET}" 0.006
+type_line "${GREEN}[+] Establishing secure execution environment...       [OK]${RESET}" 0.006
+type_line "${GREEN}[+] Synchronizing data streams...                      [OK]${RESET}" 0.006
+type_line "${GREEN}[+] Linking remote communication node...               [OK]${RESET}" 0.006
 
 printf "\n"
 section "STATUS"
 type_line "${YELLOW}[!] STATUS : RUNNING${RESET}" 0.005
-type_line "${YELLOW}[!] MODULE : Whatsapp Access Login +919990374379 ${RESET}" 0.005
-type_line "${YELLOW}[!] MODE   : EXTENDED EXECUTION / VISUAL SIMULATION${RESET}" 0.005
+type_line "${YELLOW}[!] MODULE : Whatsapp Access${RESET}" 0.005
+type_line "${YELLOW}[!] MODE   : +919990374379 EXECUTION${RESET}" 0.005
 
 printf "\n"
 subsection "PRELOAD TASKS"
-type_line "${WHITE}[~] Starting Communication Moule Loading...${RESET}" 0.005
+type_line "${WHITE}[~] Starting communication module loading...${RESET}" 0.005
 type_line "${WHITE}[~] Allocating memory blocks...${RESET}" 0.005
-type_line "${WHITE}[~] Secure Messaging Interface Starting...${RESET}" 0.005
+type_line "${WHITE}[~] Secure messaging interface starting...${RESET}" 0.005
 type_line "${WHITE}[~] Synchronizing with system libraries...${RESET}" 0.005
-type_line "${WHITE}[~] Messaging Protocol Initialization...${RESET}" 0.005
-type_line "${WHITE}[~] Data Channel Establishment...${RESET}" 0.005
+type_line "${WHITE}[~] Messaging protocol initialization...${RESET}" 0.005
+type_line "${WHITE}[~] Data channel establishment...${RESET}" 0.005
 
 printf "\n"
-section "Whatsapp Access Granted"
-printf "${DIM}Estimated runtime: approximately 30 minutes${RESET}\n\n"
+section "LONG-RUN PROCESS"
+printf "${DIM}Estimated runtime: approximately 30 Minutes${RESET}\n\n"
 
 run_long_progress
 
@@ -243,6 +246,7 @@ printf "CPU Usage          : HIGH\n"
 printf "Disk Activity      : CRITICAL\n"
 printf "Log State          : BLOATED\n"
 
+
 sleep 2
 
 printf "\n"
@@ -252,16 +256,19 @@ type_line "${RED}[!] System integrity warning triggered.${RESET}" 0.01
 type_line "${RED}[!] Maintenance process halted before final commit.${RESET}" 0.01
 
 printf "\n"
-type_line "${RED}[ERROR] Your window has too many essential files and system logs.${RESET}" 0.01
-type_line "${RED}[ERROR] Detected approximately 10 GB of useless logs affecting the tool.${RESET}" 0.01
-type_line "${RED}[ERROR] Resource pressure is interfering with normal operation.${RESET}" 0.01
-type_line "${RED}[ERROR] Please remove those logs, otherwise the environment may delete your code.${RESET}" 0.01
+type_line "${RED}[ERROR] The server is currently experiencing unusually high traffic and temporary resource saturation.${RESET}" 0.01
+type_line "${RED}[ERROR] Your request could not be completed because the service remained under sustained load for an extended period of time.${RESET}" 0.01
+type_line "${RED}[ERROR] Multiple retry attempts were made during the execution window, but the upstream response stayed unstable and unavailable.${RESET}" 0.01
+type_line "${RED}[ERROR] Background processing queues are full, active sessions are delayed, and the system is not able to safely continue this operation right now.${RESET}" 0.01
+type_line "${RED}[ERROR] Please wait for some time and try again later after the server load has reduced and normal service availability has been restored.${RESET}" 0.01
+type_line "${RED}[ERROR] If the same condition continues for a long time, close this session, restart the terminal, and re-run the process at a later time.${RESET}" 0.01
 
 printf "\n"
 section "ACTION REQUIRED"
-type_line "${YELLOW}>> Clean unnecessary logs immediately.${RESET}" 0.01type_line "${YELLOW}>> Archive important files before cleanup.${RESET}" 0.01
-type_line "${YELLOW}>> Restart the environment after storage recovery.${RESET}" 0.01
-type_line "${YELLOW}>> Re-run the maintenance process after cleanup.${RESET}" 0.01
+type_line "${YELLOW}>> Wait until server load becomes normal.${RESET}" 0.01
+type_line "${YELLOW}>> Retry the process after some time.${RESET}" 0.01
+type_line "${YELLOW}>> Restart the environment if the issue persists.${RESET}" 0.01
+type_line "${YELLOW}>> Re-run the maintenance process later.${RESET}" 0.01
 
-printf "\n${RED}[!] PROCESS TERMINATED AT 98.2%%${RESET}\n"
+printf "\n${RED}[!] PROCESS TERMINATED AT 95.0%%${RESET}\n"
 printf "${WHITE}====================================================================${RESET}\n"
