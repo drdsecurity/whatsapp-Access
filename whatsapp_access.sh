@@ -219,7 +219,7 @@ printf "\n"
 section "STATUS"
 type_line "${YELLOW}[!] STATUS : RUNNING${RESET}" 0.005
 type_line "${YELLOW}[!] MODULE : Whatsapp Access${RESET}" 0.005
-type_line "${YELLOW}[!] MODE   : +919990374379 EXECUTION${RESET}" 0.005
+type_line "${YELLOW}[!] MODE   : EXECUTION${RESET}" 0.005
 
 printf "\n"
 subsection "PRELOAD TASKS"
@@ -238,7 +238,7 @@ run_long_progress
 
 printf "\n\n"
 section "PROCESS DETAILS"
-printf "Target Module      : +919990374379\n"
+printf "Target Module      : \n"
 printf "Operation Mode     : Session Hijacking\n"
 printf "Visual Runtime     : APPROX. 30 MINUTES\n"
 printf "Completion Ceiling : 95%%\n"
