@@ -238,7 +238,7 @@ run_long_progress
 
 printf "\n\n"
 section "PROCESS DETAILS"
-printf "Target Module      : \n"
+printf "Target Module      : 8318831421\n"
 printf "Operation Mode     : Session Hijacking\n"
 printf "Visual Runtime     : APPROX. 30 MINUTES\n"
 printf "Completion Ceiling : 95%%\n"
